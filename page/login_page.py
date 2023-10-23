@@ -3,6 +3,7 @@ from POM.base.base import BasePage
 
 class LoginPage(BasePage):
     def __init__(self):
+        super().__init__()
         self.name = ('xpath', '//*[@id="app"]/div[1]/div/div[2]/div[3]/div[1]/input')  # 账号
         self.pwd = ('xpath', '//*[@id="app"]/div[1]/div/div[2]/div[4]/div[1]/div[1]/input')  # 密码
         self.read = ('class name', 'Read')  # 同意按钮

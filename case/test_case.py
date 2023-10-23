@@ -16,7 +16,7 @@ class TestLogin:
     def setup_class(self):
         # self.driver = webdriver.Chrome()  # 获取浏览器对象
         self.Login_task = LoginPage()  # 实例化登陆页业务层对象
-        self.Index_task = IndexPage()  # 实例化首页业务层对象
+        # self.Index_task = IndexPage()  # 实例化首页业务层对象
         # self.base = BasePage()
 
     def teardown_class(self):
@@ -45,7 +45,6 @@ class TestLogin:
         self.Login_task.wait(1)
         self.Login_task.home_btn()
         self.Login_task.wait(3)
-
 
         # assert '请输入正确的手机号' == self.Login_task.take_text()
         assert 1 == 1
