@@ -1,10 +1,3 @@
-"""
-@名称:    base.py
-@作者:    XZY
-@时间:    2022/12/25 20:43
-@描述:    BasePage类是POM中的基类，主要用于提供常用的函数，为页面对象类进行服务
-"""
-
 from time import sleep
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
@@ -26,7 +19,7 @@ class BasePage:
 
         self.driver = webdriver.Chrome(options=options)
         self.driver.maximize_window()
-        self.driver.implicitly_wait(2)
+        self.driver.implicitly_wait(3)
 
     def js(self):
         self.driver.execute_script("localStorage.setItem('channel', '10')")
@@ -34,8 +27,13 @@ class BasePage:
         self.driver.execute_script('sessionStorage.setItem("city", "嘉兴")')
         self.driver.execute_script('sessionStorage.setItem("AdCode", "330400")')
         self.driver.execute_script('sessionStorage.setItem("Coordinate", "120.687948, 30.757605")')
+        # 关闭页面上的vConsole
         element = self.driver.find_elements(By.XPATH, '/html/div')
-        self.driver.execute_script("arguments[0].style = 'display:none';", element[0])
+        if element:
+            self.driver.execute_script("arguments[0].style = 'display:none';", element[0])
+        # 存入用户token
+        self.driver.execute_script(
+            "localStorage.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiMCIsInVuaXF1ZV9waG9uZSI6IjE1MDAwMDAwMDAwIiwidXNlcklkIjoiMTM1MjU2MyIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTg2NDI2NGI0ZjgifQ.Efmr5Mp-iEB48TIZLrED3J3JKsaPtYLzi7tGdfVSEeE')")
 
     # 访问URL
     def goto(self, url):
@@ -44,7 +42,7 @@ class BasePage:
     # 元素定位
     def locator(self, *loc):
         try:
-            return WebDriverWait(self.driver, 2).until(EC.presence_of_element_located(*loc))
+            return WebDriverWait(self.driver, 3).until(EC.presence_of_element_located(*loc))
         except Exception as msg:
             print("定位的元素异常%s" % msg)
 
@@ -76,16 +74,14 @@ class BasePage:
     def get_text(self, loc):
         return self.locator(loc).text
 
+    # 刷新页面
+    def refresh(self):
+        return self.driver.refresh()
+
 
 # 测试用
 if __name__ == '__main__':
     test = BasePage()
     test.goto('https://chezhutest.aibaoxian.com/app/WechatLogin?VNK=7e05846b')
-    test.wait(1)
     test.js()
-    # test.locator(('class name', 'secondary'))
-
-    test.click(('xpath', '//*[@id="__layout"]/div/div[4]/div/div[3]/div[1]/form/div[3]/div/button'))
     test.wait(1)
-    # a = test.get_text(('class name', 'error'))
-    # print(a)

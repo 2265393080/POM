@@ -1,6 +1,6 @@
 import pytest
 from POM.page.login_page import LoginPage
-from POM.page.index_page import IndexPage
+from POM.page.pay_page import IndexPage
 from POM.base.base import BasePage
 from POM.data.jsontest import json_read
 import time
