@@ -32,9 +32,9 @@ class TestLogin:
         self.Index_task.refresh()
         self.Index_task.js()
         self.Index_task.click_wash_car_icon()
-        self.Index_task.click_first_business()
-        self.Index_task.click_pay_button()
+        self.Index_task.click_first_car_business()
         self.Index_task.click_buy_button()
+        self.Index_task.click_pay_button()
         self.Index_task.wait(3)
         assert "确认支付" == self.Index_task.get_pay_success_text()
         print("断言成功")
@@ -50,8 +50,8 @@ class TestLogin:
         self.Index_task.click_first_maintenance_business()
         self.Index_task.click_brand()
         self.Index_task.click_liters()
-        self.Index_task.click_pay_button()
         self.Index_task.click_buy_button()
+        self.Index_task.click_pay_button()
         self.Index_task.wait(3)
         assert "确认支付" == self.Index_task.get_pay_success_text()
         print("断言成功")
@@ -59,9 +59,7 @@ class TestLogin:
 
 if __name__ == '__main__':
     pytest.main(['-vs', __file__])
-    # pytest.main(['-vs --html=./result/report.html'])
-    # pytest.main(["--html=report/re
-    # port.html", __file__])    #生成自带的html测试报告
 
-    # pytest.main(["-vs", __file__, "--alluredir=temp/html"])
-    # os.system("allure generate ./temp/html -o ./report  --clean")
+    # pytest.main([__file__, '-vs', '--alluredir', '../result/allurejson', '--clean-alluredir'])
+    # os.system("allure generate ../result/allurejson -o ../result/report --clean")
+    # os.system("allure open ../result/report")
