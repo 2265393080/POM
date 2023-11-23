@@ -1,9 +1,9 @@
 from POM.base.base import BasePage
 
 
-class IndexPage(BasePage):
-    def __init__(self):
-        super().__init__()
+class PayPage(BasePage):
+    def __init__(self,driver):
+        super().__init__(driver)
 
         # 洗车相关按钮
         self.wash_car_icon = ('xpath', '//p[.="洗车"]/parent::div')
@@ -64,11 +64,11 @@ class IndexPage(BasePage):
 
 
 if __name__ == '__main__':
-    Index_task = IndexPage()
+    Index_task = PayPage()
     Index_task.goto("https://chezhutest.aibaoxian.com/app/home?VNK=0053de14")
-    Index_task.js()
+    Index_task.js_init()
     Index_task.refresh()
-    Index_task.js()
+    Index_task.js_init()
     # Index_task.click_wash_car_icon()
     # Index_task.click_first_car_business()
     # Index_task.click_buy_button()

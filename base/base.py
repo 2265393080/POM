@@ -2,26 +2,16 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 
 class BasePage:
+    def __init__(self, driver):
+        self.driver = driver
 
-    def __init__(self):
-
-        # 设置手机模式
-        mobile_emulation = {"deviceName": "iPhone 6"}
-        options = Options()
-        options.add_experimental_option("mobileEmulation", mobile_emulation)
-        # options.add_argument("--auto-open-devtools-for-tabs")  #开发者模式
-
-        self.driver = webdriver.Chrome(options=options)
-        self.driver.maximize_window()
-        self.driver.implicitly_wait(3)
-
-    def js(self):
+    # 初始化操作
+    def js_init(self):
         self.driver.execute_script("localStorage.setItem('channel', '10')")
         self.driver.execute_script('sessionStorage.setItem("openId", "1111")')
         self.driver.execute_script('sessionStorage.setItem("city", "嘉兴")')
@@ -35,6 +25,10 @@ class BasePage:
         self.driver.execute_script(
             "localStorage.setItem('token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiMCIsInVuaXF1ZV9waG9uZSI6IjE1MDAwMDAwMDAwIiwidXNlcklkIjoiMTM1MjU2MyIsImlzcyI6InJlc3RhcGl1c2VyIiwiYXVkIjoiMDk4ZjZiY2Q0NjIxZDM3M2NhZGU0ZTg2NDI2NGI0ZjgifQ.Efmr5Mp-iEB48TIZLrED3J3JKsaPtYLzi7tGdfVSEeE')")
 
+    # 执行js代码
+    def execute(self, jsScript):
+        self.driver.execute_script(jsScript)
+
     # 访问URL
     def goto(self, url):
         self.driver.get(url)
@@ -45,6 +39,17 @@ class BasePage:
             return WebDriverWait(self.driver, 3).until(EC.presence_of_element_located(*loc))
         except Exception as msg:
             print("定位的元素异常%s" % msg)
+
+    # 判断元素是否存在
+    def is_element_exist(self, args):
+        flag = True
+        try:
+            self.locator(args)
+            return flag
+        except Exception as msg:
+            flag = False
+            print("判断元素存在异常%s" % msg)
+            return flag
 
     # 输入
     def send_keys(self, loc, value, clear_first=True):
@@ -66,7 +71,7 @@ class BasePage:
     def wait(self, time):
         sleep(time)
 
-    # 关闭
+    # 关闭浏览器
     def close(self):
         self.driver.quit()
 
@@ -74,14 +79,29 @@ class BasePage:
     def get_text(self, loc):
         return self.locator(loc).text
 
+    # 获取元素属性值
+    def get_attribute(self, loc, attribute_values):
+        return self.locator(loc).get_attribute(attribute_values)
+
     # 刷新页面
     def refresh(self):
         return self.driver.refresh()
 
 
-# 测试用
 if __name__ == '__main__':
-    test = BasePage()
+    test = BasePage(webdriver)
+
+    # 设置手机模式
+    mobile_emulation = {"deviceName": "iPhone 6"}
+    options = Options()
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
+
+    # 开发者模式
+    # options.add_argument("--auto-open-devtools-for-tabs")
+
+    test.driver = webdriver.Chrome(options=options)
+    test.driver.maximize_window()
+    test.driver.implicitly_wait(3)
     test.goto('https://chezhutest.aibaoxian.com/app/WechatLogin?VNK=7e05846b')
-    test.js()
-    test.wait(1)
+    test.js_init()
+    test.wait(10)

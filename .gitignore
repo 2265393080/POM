@@ -1,2 +1,6 @@
 __pycache__/
+/base/__pycache__/
+/case/__pycache__/
+/page/__pycache__/
 .pytest_cache
+/.idea/

@@ -1,1 +1,0 @@
-[{"uid":"aa449fc2c8dc7062","name":"test_payment_maintenance_success","time":{"start":1700126092470,"stop":1700126111593,"duration":19123},"status":"passed","severity":"normal"},{"uid":"1f748ae8452c5f54","name":"test_payment_wash_car_success","time":{"start":1700126078694,"stop":1700126092302,"duration":13608},"status":"broken","severity":"normal"}]
