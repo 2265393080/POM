@@ -94,7 +94,7 @@ class BasePage:
     # 获取元素属性值
     def get_attribute(self, loc, attribute_values):
         value = self.locator(loc).get_attribute(attribute_values)
-        log.info("元素{}的属性值为{}".format(loc, value))
+        log.info("元素{}的属性值为：{}".format(loc, value))
         return value
 
     # 刷新页面

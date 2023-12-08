@@ -1,5 +1,6 @@
 from POM.base.base import BasePage
-
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 class PayPage(BasePage):
     def __init__(self,driver):
@@ -64,7 +65,13 @@ class PayPage(BasePage):
 
 
 if __name__ == '__main__':
-    Index_task = PayPage()
+    Index_task = PayPage(webdriver)
+    mobile_emulation = {"deviceName": "iPhone 6"}
+    options = Options()
+    options.add_experimental_option("mobileEmulation", mobile_emulation)
+    Index_task.driver = webdriver.Chrome(options=options)
+    Index_task.driver.maximize_window()
+    Index_task.driver.implicitly_wait(3)
     Index_task.goto("https://chezhutest.aibaoxian.com/app/home?VNK=0053de14")
     Index_task.js_init()
     Index_task.refresh()

@@ -6,3 +6,4 @@ page/__pycache__/
 /.idea/
 screenshots
 logs
+/result/
