@@ -134,4 +134,4 @@ if __name__ == '__main__':
     test.goto('https://chezhutest.aibaoxian.com/app/WechatLogin?VNK=7e05846b')
     test.js_init()
     test.wait(2)
-    test.save_screenshot_('1234')
+    test.save_screenshot_('12345')
